@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--引入css-->
+<link rel="stylesheet" th:href="@{index.css}">
+<!--引入javaScript-->
+<script type="text/javascript" th:src="@{index.js}"></script>
+<!---->
+<head>
+    <meta charset="UTF-8">
+    <title>用户展示页面</title>
+</head>
+<body>
+<center>
+    <p>
+    <form th:action="@{showOrd}" th:method="post">
+        订单编号:<input th:type="text" th:name="onumber"/>
+        订单价格:<input th:type="text" th:name="price"/>
+        订单日期:<input th:type="date" th:name="createtime"/>
+        <input th:type="submit" th:value="搜索">
+    </form>
+    </p>
+    <table border="1px">
+        <tr>
+            <th>id号</th>
+            <th>订单编号</th>
+            <th>订单时间</th>
+            <th>订单价格</th>
+            <th>订单备注</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="order:${ordersList}">
+            <td th:text="${order.oid}"></td>
+            <td th:text="${order.onumber}"></td>
+            <td>
+                <input th:type="text" th:value="${#dates.format(order.createtime,'yyyy-MM-dd')}">
+            </td>
+            <td th:text="${order.price}"></td>
+            <td th:text="${order.note}"></td>
+            <td>
+                <a th:href="@{'/del?oid='+${order.oid}}">删除</a>
+            </td>
+        </tr>
+
+    </table>
+</center>
+</body>
+</html>
